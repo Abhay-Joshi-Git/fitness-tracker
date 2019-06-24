@@ -1,0 +1,58 @@
+<section>
+  <form fxLayout="column"
+        fxLayoutAlign="center stretch"
+        #signupForm="ngForm"
+        (ngSubmit)="onSubmit(signupForm)">
+    <mat-form-field>
+        <input
+          type="email"
+          matInput
+          placeholder="email"
+          name="useremail"
+          ngModel
+          #useremail="ngModel"
+          email
+          required
+        />
+        <mat-error *ngIf="useremail.errors?.required">email is required</mat-error>
+        <mat-error  *ngIf="!useremail.errors?.required">entered email is not valid</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input
+          type="password"
+          matInput
+          ngModel
+          placeholder="password"
+          #password="ngModel"
+          name="password"
+          required
+          minlength="6"
+        />
+        <mat-hint *ngIf="!password.valid">password should contain 6 charachters</mat-hint>
+        <mat-hint align="end">{{password.value?.length}}</mat-hint>
+        <mat-error *ngIf="password.errors && password.errors.required">password cannot be empty</mat-error>
+        <mat-error *ngIf="password.errors && password.errors.minlength">password need to have atlest 6 characters</mat-error>
+        <mat-error align="end" class="absolute right-0 top-0">{{password.value?.length}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          placeholder="birthdate"
+          ngModel
+          #birthdate="ngModel"
+          name="birthdate"
+          required>
+        <mat-datepicker-toggle matSuffix [for]="picker" class="top10"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="birthdate.errors && birthdate.errors.required">birthdate cannot be empty</mat-error>
+    </mat-form-field>
+    <mat-checkbox required ngModel #terms="ngModel" name="terms">Agree To Terms And Condition</mat-checkbox>
+    <div fxLayout="row" fxLayoutAlign="end center" class="mt-3">
+      <button mat-raised-button
+              color="primary"
+              [disabled]="signupForm.invalid" 
+              type="submit">Submit</button>
+    </div>
+  </form>
+</section>

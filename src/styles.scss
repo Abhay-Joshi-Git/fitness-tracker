@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~tailwindcss/dist/tailwind.css";
+
+.main-content {
+  max-width: 38rem;
+  padding: 2rem;
+  margin: auto;
+}
+
+.mat-datepicker-toggle.top10 button {
+  top: 10px;
+}
