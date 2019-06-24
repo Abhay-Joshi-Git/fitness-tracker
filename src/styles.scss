@@ -2,10 +2,8 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~tailwindcss/dist/tailwind.css";
 
-.main-content {
-  max-width: 38rem;
-  padding: 2rem;
-  margin: auto;
+html, body {
+  height: 100vh;
 }
 
 .mat-datepicker-toggle.top10 button {

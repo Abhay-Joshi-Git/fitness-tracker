@@ -1,3 +1,11 @@
-<main class="main-content">
-  <router-outlet class="main-content"></router-outlet>
-</main>
+<mat-toolbar color="primary">
+  <button (click)="sidenav.toggle()">Toggle Sidenav</button>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over">side nav</mat-sidenav>
+  <mat-sidenav-content>
+    <main class="main-content">
+      <router-outlet class="main-content"></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
