@@ -1,6 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~tailwindcss/dist/tailwind.css";
+@import '~@angular/material/theming';
+
+$primary: mat-palette($mat-indigo);
+$accent:  mat-palette($mat-pink, A200, A100, A400);
+$theme: mat-light-theme($primary, $accent);
+
+@include angular-material-theme($theme);
 
 html, body {
   height: 100vh;
@@ -8,4 +15,12 @@ html, body {
 
 .mat-datepicker-toggle.top10 button {
   top: 10px;
+}
+
+.router-link-active {
+  color: mat-color($accent, lighter) !important;
+
+  &:hover {
+    color: mat-color($accent, darker) !important;
+  }
 }

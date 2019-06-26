@@ -1,0 +1,16 @@
+a {
+    text-decoration: none;
+    color: white;
+
+    &:hover {
+        color: lightgrey;
+    }
+
+    cursor: pointer;
+}
+
+.menu-button {
+    position: absolute !important;
+    left: 10px;
+    top: auto;
+}
