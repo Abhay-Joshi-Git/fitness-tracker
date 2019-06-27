@@ -1,3 +1,24 @@
-<p>
-  new-training works!
-</p>
+<section>
+  <form [formGroup]="newExerciseForm">
+    <mat-card class="mt-3" fxLayout="column" fxLayoutAlign="flex-start center">
+      <mat-card-header>
+        <mat-card-title>Start a new exercise</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label>Exercise</mat-label>
+          <mat-select
+            [formControl]="newExerciseForm.exercise"
+            placeholder="exercise"
+            name="exercise">
+            <mat-option value="crunches">Crunches</mat-option>
+            <mat-option value="pushUps">Pushups</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="flex-end center">
+        <button mat-raised-button color="primary">Start</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</section>
