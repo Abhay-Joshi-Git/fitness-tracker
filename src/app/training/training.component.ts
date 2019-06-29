@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TrainingComponent implements OnInit {
 
+  currentExerciseInProgress = '';
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onStartNewExercise(exerciseName) {
+    console.log('onStartNewExercise --', exerciseName);
+    this.currentExerciseInProgress = exerciseName;
   }
 
 }

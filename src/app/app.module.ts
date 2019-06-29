@@ -17,6 +17,7 @@ import { CurrentTrainingComponent } from './training/current-training/current-tr
 import { PastTrainingComponent } from './training/past-training/past-training.component';
 import { ToolBarComponent } from './navigation/tool-bar/tool-bar.component';
 import { SideNavComponent } from './navigation/side-nav/side-nav.component';
+import { ConfirmationDialogComponent } from './training/current-training/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { SideNavComponent } from './navigation/side-nav/side-nav.component';
     CurrentTrainingComponent,
     PastTrainingComponent,
     ToolBarComponent,
-    SideNavComponent
+    SideNavComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +43,9 @@ import { SideNavComponent } from './navigation/side-nav/side-nav.component';
     ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ConfirmationDialogComponent
+  ]
 })
 export class AppModule { }
