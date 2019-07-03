@@ -1,18 +1,26 @@
 <mat-nav-list (click)="closeSidenav()">
-  <a mat-list-item routerLink="/training" routerLinkActive="router-link-active">
-    <mat-icon class="mr-2">fitness_center</mat-icon>
-    <span>training</span>
-  </a>
-  <a mat-list-item routerLink="/signup" routerLinkActive="router-link-active">
-    <mat-icon class="mr-2">face</mat-icon>
-    <span>Signup</span>
-  </a>
-  <a mat-list-item routerLink="/login" routerLinkActive="router-link-active">
-    <mat-icon class="mr-2">lock_open</mat-icon>
-    <span>login</span>
-  </a>
-  <a mat-list-item routerLink="/logout" routerLinkActive="router-link-active">
-    <mat-icon class="mr-2">exit_to_app</mat-icon>
-    <span>logout</span>
-  </a>
+  <ng-container *ngIf="isAuth; else noAuth">
+    <a
+      mat-list-item
+      routerLink="/training"
+      routerLinkActive="router-link-active"
+    >
+      <mat-icon class="mr-2">fitness_center</mat-icon>
+      <span>training</span>
+    </a>
+    <a mat-list-item (click)="logout()" routerLinkActive="router-link-active">
+      <mat-icon class="mr-2">exit_to_app</mat-icon>
+      <span>logout</span>
+    </a>
+  </ng-container>
+  <ng-template #noAuth>
+    <a mat-list-item routerLink="/signup" routerLinkActive="router-link-active">
+      <mat-icon class="mr-2">face</mat-icon>
+      <span>Signup</span>
+    </a>
+    <a mat-list-item routerLink="/login" routerLinkActive="router-link-active">
+      <mat-icon class="mr-2">lock_open</mat-icon>
+      <span>login</span>
+    </a>
+  </ng-template>
 </mat-nav-list>

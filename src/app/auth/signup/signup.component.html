@@ -41,8 +41,7 @@
           placeholder="birthdate"
           ngModel
           #birthdate="ngModel"
-          name="birthdate"
-          required>
+          name="birthdate">
         <mat-datepicker-toggle matSuffix [for]="picker" class="top10"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <mat-error *ngIf="birthdate.errors && birthdate.errors.required">birthdate cannot be empty</mat-error>
