@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
+import { Exercise } from '../exercise.model';
 
 @Component({
   selector: 'app-current-training',
@@ -9,7 +10,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 })
 export class CurrentTrainingComponent implements OnInit {
 
-  @Input() currentExercise = '';
+  @Input() currentExercise: Exercise | null = null;
   @Output() exitExercise = new EventEmitter<number>();
   progress = 0;
   intervalId: number | null = null;
@@ -22,6 +23,7 @@ export class CurrentTrainingComponent implements OnInit {
 
   startProgress() {
     this.intervalId = window.setInterval(() => {
+      console.log('progressing.....', this.progress);
       this.progress +=  10;
       if (this.progress > 100) {
         this.progress = 100;

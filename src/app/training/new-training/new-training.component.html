@@ -23,8 +23,9 @@
             name="exercise"
             required
           >
-            <mat-option value="Crunches">Crunches</mat-option>
-            <mat-option value="Pushups">Pushups</mat-option>
+            <mat-option *ngFor="let exercise of availableExercises"
+                        [value]="exercise.id"
+            >{{exercise.name}}</mat-option>
           </mat-select>
         </mat-form-field>
         <div fxLayout="row" class="mt-4" fxLayoutAlign="flex-end center">

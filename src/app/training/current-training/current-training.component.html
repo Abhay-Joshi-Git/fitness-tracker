@@ -1,6 +1,6 @@
 <mat-card fxLayout="column" fxLayoutAlign="center center" class="text-center">
   <mat-card-header>
-    <mat-card-title>Current Training: {{currentExercise}}</mat-card-title>
+    <mat-card-title>Current Training: {{currentExercise?.name}}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <mat-progress-spinner mode="determinate" [value]="progress"></mat-progress-spinner>
