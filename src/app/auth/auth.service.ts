@@ -31,12 +31,11 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    const user = this.registeredUsers.find((u: User) => u.email === email && u.password === password);
-    if (user) {
+    // const user = this.registeredUsers.find((u: User) => u.email === email && u.password === password);
+    // if (user) {
       this.isAuth.next(true);
       this.router.navigate(['/training']);
-    }
-    console.log('login -- ', email, password, user);
+    // }
   }
 
   logout() {

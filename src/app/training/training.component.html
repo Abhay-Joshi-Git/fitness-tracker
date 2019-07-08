@@ -1,6 +1,5 @@
 <app-current-training *ngIf="currentExerciseInProgress; else nonCurrentTraining"
   [currentExercise]="currentExerciseInProgress"
-  (exitExercise)="currentExerciseInProgress = ''"
 ></app-current-training>
 <ng-template #nonCurrentTraining>
   <mat-tab-group>

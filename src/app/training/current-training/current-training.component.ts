@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 import { Exercise } from '../exercise.model';
+import { TrainingService } from '../training.service';
+import { take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-current-training',
@@ -11,25 +13,27 @@ import { Exercise } from '../exercise.model';
 export class CurrentTrainingComponent implements OnInit {
 
   @Input() currentExercise: Exercise | null = null;
-  @Output() exitExercise = new EventEmitter<number>();
   progress = 0;
   intervalId: number | null = null;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog,
+              private readonly _trainingService: TrainingService) { }
 
   ngOnInit() {
     this.startProgress();
   }
 
   startProgress() {
+    let step: number = this.currentExercise.duration / 100 * 1000;
     this.intervalId = window.setInterval(() => {
       console.log('progressing.....', this.progress);
       this.progress +=  10;
       if (this.progress > 100) {
         this.progress = 100;
+        this._trainingService.completeExercise();
         window.clearInterval(this.intervalId);
       }
-    }, 1000);
+    }, step);
   }
 
   onStop() {
@@ -45,7 +49,7 @@ export class CurrentTrainingComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result) {
-        this.exitExercise.emit(this.progress);
+        this._trainingService.cancelExercise(this.progress);
       } else {
         this.startProgress();
       }
