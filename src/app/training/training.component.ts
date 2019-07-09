@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./training.component.scss'],
 })
 export class TrainingComponent implements OnInit, OnDestroy {
-  _currentExerciseSubscription: Subscription;
+  _currentExerciseSubscription: Subscription = Subscription.EMPTY;
   currentExerciseInProgress: Exercise | null = null;
   constructor(private readonly _trainingService: TrainingService) { }
 
