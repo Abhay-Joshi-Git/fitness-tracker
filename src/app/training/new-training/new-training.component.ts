@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TrainingService } from '../training.service';
 import { Exercise } from '../exercise.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-new-training',
@@ -10,7 +11,7 @@ import { Exercise } from '../exercise.model';
 })
 export class NewTrainingComponent implements OnInit {
   newExerciseForm: FormGroup;
-  availableExercises: Exercise[];
+  availableExercises: Observable<Array<Exercise>>;
 
   constructor(private formBuilder: FormBuilder,
               private readonly trainingService: TrainingService) { }

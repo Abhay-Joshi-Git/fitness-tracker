@@ -1,31 +1,42 @@
-import { Exercise } from './exercise.model';
+import { Exercise, ExerciseData } from './exercise.model';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, zip } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
+import { AngularFirestore, DocumentChangeAction, DocumentReference } from '@angular/fire/firestore';
+import { firestore } from 'firebase';
+import { omit } from 'lodash-es';
+
+enum DocumentName {
+    AVAILABLE_EXERCISES = 'availableExercises',
+    DONE_EXERCISES = 'doneExercises'
+}
+
+interface ExerciseDBData {
+    name: string;
+    duration: number;
+    calories: number;
+    state?: 'completed' | 'cancelled' | 'inProgress' | null;
+    date?: firestore.Timestamp;
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class TrainingService {
-    private _availableExercises: Array<Exercise> = [
-        {
-            id: '1',
-            name: 'Crunches',
-            duration: 30,
-            calories: 250
-        },
-        {
-            id: '2',
-            name: 'PushUps',
-            duration: 20,
-            calories: 350
-        }
-    ];
     private _exercises: BehaviorSubject<Array<Exercise>> = new BehaviorSubject([]);
     private _currentExercise: BehaviorSubject<Exercise | null> = new BehaviorSubject(null);
 
-    getAvailableExercises(): Array<Exercise> {
-        return [ ...this._availableExercises ];
+    constructor(private readonly db: AngularFirestore) {}
+
+    getAvailableExercises(): Observable<Array<Exercise>> {
+        return this.db.collection(DocumentName.AVAILABLE_EXERCISES).snapshotChanges().pipe(
+            map((docChanges: DocumentChangeAction<ExerciseData>[]) => {
+                return docChanges.map((docChange: DocumentChangeAction<ExerciseData>) => ({
+                    id: docChange.payload.doc.id,
+                    ...docChange.payload.doc.data()
+                }));
+            })
+        )
     }
 
     get currentExercise(): Observable<Exercise | null> {
@@ -33,25 +44,43 @@ export class TrainingService {
     }
 
     get doneExercises(): Observable<Array<Exercise>> {
-        return this._exercises.asObservable();
+        return this.db.collection(DocumentName.DONE_EXERCISES).snapshotChanges().pipe(
+            map((docChanges: DocumentChangeAction<ExerciseDBData>[]) => {
+                return docChanges.map((docChange: DocumentChangeAction<ExerciseDBData>) => ({
+                    id: docChange.payload.doc.id,
+                    ...this.getExerciseDataByDBData(docChange.payload.doc.data())
+                }));
+            })
+        )
+    }
+
+    private getExerciseDataByDBData(data: ExerciseDBData) : ExerciseData {
+        if (data.date) {
+            return {
+                ...data,
+                date: data.date.toDate()
+            };
+        }
+        return omit(data, ['date']);
     }
 
     setCurrentExercise(exerciseId: string): void {
-        const currentExercise: Exercise = this._availableExercises.find(e => e.id === exerciseId) || null;
-        console.log(' setting exercise --', exerciseId, currentExercise);
-        this._currentExercise.next(currentExercise);
+        this.getAvailableExercises().pipe(
+            take(1)
+        ).subscribe(availableExercises => {
+            const currentExercise: Exercise = availableExercises.find(e => e.id === exerciseId) || null;
+            this._currentExercise.next(currentExercise);
+        });
     }
 
     private markExerciseDone(exerciseVal: Exercise): void {
-        this.doneExercises.pipe(
-            take(1)
-        ).subscribe(doneExercises => {
-            this._exercises.next([
-                ...doneExercises,
-                exerciseVal,
-            ]);
+        this.storeDoneExerciseToDB(exerciseVal).then(() => {
             this._currentExercise.next(null);
         });
+    }
+
+    private storeDoneExerciseToDB(exerciseVal: Exercise): Promise<DocumentReference> {
+        return this.db.collection(DocumentName.DONE_EXERCISES).add(exerciseVal);
     }
 
     completeExercise() {

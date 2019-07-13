@@ -23,7 +23,7 @@
             name="exercise"
             required
           >
-            <mat-option *ngFor="let exercise of availableExercises"
+            <mat-option *ngFor="let exercise of availableExercises | async"
                         [value]="exercise.id"
             >{{exercise.name}}</mat-option>
           </mat-select>
