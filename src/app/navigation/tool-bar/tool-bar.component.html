@@ -1,13 +1,13 @@
 <mat-toolbar color="primary" class="relative">
   <button
-    fxHide.gt-sm
+    fxHide.gt-xs
     mat-icon-button
     class="menu-button"
     (click)="toggleSidenav()"
   >
     <mat-icon>menu</mat-icon>
   </button>
-  <span fxFlex.lt-sm fxLayout.lt-sm="row" fxLayoutAlign.lt-sm="center">
+  <span fxHide.lt-sm fxLayout.lt-sm="row" fxLayoutAlign.lt-sm="center">
     <a routerLink="/">Logo</a>
   </span>
   <ul
