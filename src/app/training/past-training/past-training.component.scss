@@ -1,0 +1,9 @@
+@media screen and (max-width: 599px) {
+    .mat-cell {
+        padding-left: 12px;
+
+        & .mobile-label {
+            font-weight: bolder;
+        }
+    }
+}
