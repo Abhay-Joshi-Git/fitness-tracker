@@ -1,9 +1,21 @@
 @media screen and (max-width: 599px) {
     .mat-cell {
         padding-left: 12px;
+        min-height: 24px;
 
         & .mobile-label {
+            margin-right: 5px;
             font-weight: bolder;
         }
+    }
+
+    .mat-row {
+        min-height: 0px;
+        margin: 10px 0px;
+    }
+
+    .mat-table {
+        background: transparent;
+        border: none;
     }
 }

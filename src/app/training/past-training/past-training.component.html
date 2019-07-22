@@ -41,11 +41,11 @@
       </ng-container>
 
       <mat-header-row fxHide.lt-sm *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-      <mat-row fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="start start"
+      <mat-row fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="start start" [class.mat-card]="isMobile"
         *matRowDef="let myRowData; columns: columnsToDisplay"
       ></mat-row>
     </mat-table>
-    <mat-paginator [pageSize]="1"
+    <mat-paginator [style.display]="isMobile ? 'none': 'block'" [pageSize]="1"
                    [pageSizeOptions]="[1, 5, 10, 25, 100]"
                    class="my-1"
     >
