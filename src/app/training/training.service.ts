@@ -6,6 +6,7 @@ import { AngularFirestore, DocumentChangeAction, DocumentReference } from '@angu
 import { firestore } from 'firebase';
 import { omit } from 'lodash-es';
 import { OverlaySpinnerService } from '../ui/overlay-spinner/overlay-spinner.service';
+import { MatSnackBar } from '@angular/material';
 
 enum DocumentName {
     AVAILABLE_EXERCISES = 'availableExercises',
@@ -28,7 +29,8 @@ export class TrainingService {
     private _currentExercise: BehaviorSubject<Exercise | null> = new BehaviorSubject(null);
 
     constructor(private readonly db: AngularFirestore,
-                private readonly spinner: OverlaySpinnerService) {}
+                private readonly spinner: OverlaySpinnerService,
+                private readonly snackBar: MatSnackBar) {}
 
     getAvailableExercises(): Observable<Array<Exercise>> {
         return this.db.collection(DocumentName.AVAILABLE_EXERCISES).snapshotChanges().pipe(
@@ -77,6 +79,9 @@ export class TrainingService {
 
     private markExerciseDone(exerciseVal: Exercise): Promise<DocumentReference> {
         return this.storeDoneExerciseToDB(exerciseVal).then((data) => {
+            this.snackBar.open(`exercise ${exerciseVal.state} successfully.`, 'x', {
+                duration: 4000
+            });
             this._currentExercise.next(null);
             return data;
         });
@@ -90,13 +95,11 @@ export class TrainingService {
         return this.currentExercise.pipe(
             take(1),
             tap(() => {
-                console.log('opening dialog ....');
                 this.spinner.open();
             }),
             flatMap(exercise => {
                 return from(processor(exercise)).pipe(
                     finalize(() => {
-                        console.log('closing dialog ... ');
                         this.spinner.close();
                     })
                 )
