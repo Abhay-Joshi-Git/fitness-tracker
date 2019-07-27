@@ -1,10 +1,11 @@
 import { Exercise, ExerciseData } from './exercise.model';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, zip } from 'rxjs';
-import { take, map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, zip, from } from 'rxjs';
+import { take, map, flatMap, tap, finalize } from 'rxjs/operators';
 import { AngularFirestore, DocumentChangeAction, DocumentReference } from '@angular/fire/firestore';
 import { firestore } from 'firebase';
 import { omit } from 'lodash-es';
+import { OverlaySpinnerService } from '../ui/overlay-spinner/overlay-spinner.service';
 
 enum DocumentName {
     AVAILABLE_EXERCISES = 'availableExercises',
@@ -26,7 +27,8 @@ export class TrainingService {
     private _exercises: BehaviorSubject<Array<Exercise>> = new BehaviorSubject([]);
     private _currentExercise: BehaviorSubject<Exercise | null> = new BehaviorSubject(null);
 
-    constructor(private readonly db: AngularFirestore) {}
+    constructor(private readonly db: AngularFirestore,
+                private readonly spinner: OverlaySpinnerService) {}
 
     getAvailableExercises(): Observable<Array<Exercise>> {
         return this.db.collection(DocumentName.AVAILABLE_EXERCISES).snapshotChanges().pipe(
@@ -73,9 +75,10 @@ export class TrainingService {
         });
     }
 
-    private markExerciseDone(exerciseVal: Exercise): void {
-        this.storeDoneExerciseToDB(exerciseVal).then(() => {
+    private markExerciseDone(exerciseVal: Exercise): Promise<DocumentReference> {
+        return this.storeDoneExerciseToDB(exerciseVal).then((data) => {
             this._currentExercise.next(null);
+            return data;
         });
     }
 
@@ -83,29 +86,43 @@ export class TrainingService {
         return this.db.collection(DocumentName.DONE_EXERCISES).add(exerciseVal);
     }
 
+    private processExercise(processor: Function) {
+        return this.currentExercise.pipe(
+            take(1),
+            tap(() => {
+                console.log('opening dialog ....');
+                this.spinner.open();
+            }),
+            flatMap(exercise => {
+                return from(processor(exercise)).pipe(
+                    finalize(() => {
+                        console.log('closing dialog ... ');
+                        this.spinner.close();
+                    })
+                )
+            })
+        );
+    }
+
     completeExercise() {
-        this.currentExercise.pipe(
-            take(1)
-        ).subscribe(exercise => {
-            this.markExerciseDone({
+        return this.processExercise((exercise: Exercise) => {
+            return this.markExerciseDone({
                 ...exercise,
                 date: new Date(),
                 state: 'completed'
-            });
-        });
+            })
+        }).subscribe();
     }
 
     cancelExercise(durationCompletedInPercentage: number) {
-        this.currentExercise.pipe(
-            take(1)
-        ).subscribe(exercise => {
-            this.markExerciseDone({
+        return this.processExercise((exercise: Exercise) => {
+            return this.markExerciseDone({
                 ...exercise,
                 duration: durationCompletedInPercentage / 100 * exercise.duration,
-                calories: durationCompletedInPercentage / 100 * exercise.calories, 
+                calories: durationCompletedInPercentage / 100 * exercise.calories,
                 date: new Date(),
                 state: 'cancelled'
-            });
-        });
+            })
+        }).subscribe();
     }
 }

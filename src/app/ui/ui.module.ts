@@ -11,6 +11,9 @@ import { MaterialModule } from 'src/material.module';
   ],
   exports: [
     OverlaySpinnerComponent
+  ],
+  entryComponents: [
+    OverlaySpinnerComponent
   ]
 })
 export class UiModule { }

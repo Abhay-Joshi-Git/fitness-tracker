@@ -24,3 +24,9 @@ html, body {
     color: mat-color($accent, darker) !important;
   }
 }
+
+.backdrop-panel-no-dialog-container {
+  .mat-dialog-container {
+    padding: 0;
+  }
+}
