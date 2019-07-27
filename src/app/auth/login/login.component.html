@@ -1,6 +1,6 @@
 <section>
   <form fxLayout="column"
-        fxLayoutAlign="center stretch"
+        fxLayoutAlign.gt-xs="center stretch" fxLayoutAlign.lt-sm="center center"
         [formGroup]="loginForm"
         (ngSubmit)="onSubmit()">
       <mat-error *ngIf="formError" class="my-3">

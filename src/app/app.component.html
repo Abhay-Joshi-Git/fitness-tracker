@@ -2,10 +2,10 @@
   <mat-sidenav #sidenav mode="over">
     <app-side-nav (sidenavClose)="sidenav.close()"></app-side-nav>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content fxLayout="column" fxLayoutAlign="start stretch" >
     <app-tool-bar (sidenavToggle)="sidenav.toggle()"></app-tool-bar>
-    <main class="main-content">
-      <router-outlet class="main-content"></router-outlet>
+    <main class="main-content" fxFlexFill.gt-xs fxLayout="column" fxLayoutAlign="start" >
+      <router-outlet></router-outlet>
     </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
