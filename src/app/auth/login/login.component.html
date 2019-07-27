@@ -3,32 +3,42 @@
         fxLayoutAlign="center stretch"
         [formGroup]="loginForm"
         (ngSubmit)="onSubmit()">
-    <mat-form-field>
-      <input
-        matInput
-        type="email"
-        placeholder="email"
-        email
-        [formControl]="loginForm.get('email')"
-        name="email"
-        required />
-      <mat-error *ngIf="true">email is required</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        type="password"
-        placeholder="password"
-        [formControl]="loginForm.get('password')"
-        name="password"
-        required />
-      <mat-error *ngIf="true">password is required</mat-error>
-    </mat-form-field>
-    <div>
+      <mat-error *ngIf="formError" class="my-3">
+        {{ formError }}
+      </mat-error>
+    <fieldset [disabled]="loading"
+              fxLayout="column"
+              fxLayoutAlign="center stretch"
+              class="relative my-4">
+      <app-overlay-spinner *ngIf="loading"></app-overlay-spinner>
+      <mat-form-field>
+        <input
+          matInput
+          type="email"
+          placeholder="email"
+          email
+          [formControl]="loginForm.get('email')"
+          name="email"
+          required />
+        <mat-error *ngIf="true">email is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="password"
+          placeholder="password"
+          [formControl]="loginForm.get('password')"
+          name="password"
+          required />
+        <mat-error *ngIf="true">password is required</mat-error>
+      </mat-form-field>
+    </fieldset>
+    <div fxLayoutAlign="end center" fxLayoutGap="8px">
       <button type="submit"
               mat-raised-button
               color="primary"
-              [disabled]="loginForm.invalid">Submit</button>
+              [disabled]="loginForm.invalid || loading">Login</button>
+
     </div>
   </form>
 </section>

@@ -22,6 +22,7 @@ import { ToolBarComponent } from './navigation/tool-bar/tool-bar.component';
 import { SideNavComponent } from './navigation/side-nav/side-nav.component';
 import { ConfirmationDialogComponent } from './training/current-training/confirmation-dialog.component';
 import { environment } from 'src/environments/environment';
+import { UiModule } from './ui/ui.module';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { environment } from 'src/environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    UiModule
   ],
   providers: [],
   bootstrap: [AppComponent],

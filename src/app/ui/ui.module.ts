@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { OverlaySpinnerComponent } from './overlay-spinner/overlay-spinner.component';
+import { MaterialModule } from 'src/material.module';
 
 @NgModule({
-  declarations: [],
+  declarations: [OverlaySpinnerComponent],
   imports: [
+    MaterialModule,
     CommonModule
   ],
-  exports: []
+  exports: [
+    OverlaySpinnerComponent
+  ]
 })
 export class UiModule { }

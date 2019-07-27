@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth'
 import { User } from './user.model';
-import { Subject, BehaviorSubject, Subscription } from 'rxjs';
+import { Subject, BehaviorSubject, Subscription, from } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -41,7 +41,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    this.fireAuth.auth.signInWithEmailAndPassword(email, password);
+    return from(this.fireAuth.auth.signInWithEmailAndPassword(email, password));
   }
 
   logout() {

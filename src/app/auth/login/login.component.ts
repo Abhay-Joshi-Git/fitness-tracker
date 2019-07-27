@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { pipe } from 'rxjs';
+import { take, map, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -9,6 +11,8 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  loading = false;
+  formError: string | null = null;
 
   constructor(private readonly fb: FormBuilder, private authService: AuthService) { }
 
@@ -21,8 +25,17 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log(this.loginForm);
+    this.loading = true;
+    this.formError = null;
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value.email, this.loginForm.value.password);
+      this.authService.login(this.loginForm.value.email, this.loginForm.value.password).pipe(
+          finalize(() => {
+            this.loading = false;
+          })
+        ).subscribe(null, (error) => {
+          this.formError = error.message
+        });
     }
   }
+
 }
