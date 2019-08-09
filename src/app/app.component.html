@@ -4,7 +4,9 @@
   </mat-sidenav>
   <mat-sidenav-content fxLayout="column" fxLayoutAlign="start stretch" >
     <app-tool-bar (sidenavToggle)="sidenav.toggle()"></app-tool-bar>
-    <main class="main-content" fxFlexFill.gt-xs fxLayout="column" fxLayoutAlign="start" >
+    <main class="main-content"
+          fxFlexFill.gt-xs fxLayout="column"
+          fxLayoutAlign="start">
       <router-outlet></router-outlet>
     </main>
   </mat-sidenav-content>

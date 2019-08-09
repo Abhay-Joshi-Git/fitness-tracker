@@ -1,8 +1,9 @@
-<section>
+<section fxLayout="column" fxLayoutAlign.gt-xs="center center">
   <form fxLayout="column"
         fxLayoutAlign.gt-xs="center stretch" fxLayoutAlign.lt-sm="center center"
         [formGroup]="loginForm"
-        (ngSubmit)="onSubmit()">
+        (ngSubmit)="onSubmit()"
+        class="short-width-wrapper">
       <mat-error *ngIf="formError" class="my-3">
         {{ formError }}
       </mat-error>
@@ -33,7 +34,7 @@
         <mat-error *ngIf="true">password is required</mat-error>
       </mat-form-field>
     </fieldset>
-    <div fxLayoutAlign="end center" fxLayoutGap="8px">
+    <div fxLayoutAlign="end center"fxLayoutGap="8px">
       <button type="submit"
               mat-raised-button
               color="primary"
