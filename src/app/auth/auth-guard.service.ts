@@ -23,6 +23,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
 
   canLoad(route: Route, segments: UrlSegment[]) {
     return this.authService.isAuthenticated().pipe(
+      tap(val => console.log(' ---- ----- can load ', val)),
       take(1),
     )
   }

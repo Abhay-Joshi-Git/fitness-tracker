@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth'
 import { User } from './user.model';
-import { Subject, BehaviorSubject, Subscription, from } from 'rxjs';
+import { Subject, BehaviorSubject, Subscription, from, combineLatest } from 'rxjs';
 import { Router } from '@angular/router';
+import { take, skipUntil, filter, map, sampleTime, skipWhile, tap } from 'rxjs/operators';
+import { FirebaseNameOrConfigToken } from '@angular/fire';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,7 @@ export class AuthService {
   private authStateSubscription: Subscription = Subscription.EMPTY;
   private registeredUsers: User[] = [];
   private isAuth: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private isFireAuthInitialize: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private router: Router, private fireAuth: AngularFireAuth) {
     this.initAuthStateChangeListener();
@@ -18,6 +21,7 @@ export class AuthService {
 
   initAuthStateChangeListener() {
     this.authStateSubscription = this.fireAuth.authState.subscribe(user => {
+      console.log(' authStateSubscription ', user);
       if (user) {
         this.isAuth.next(true);
         this.router.navigate(['/training']);
@@ -25,11 +29,16 @@ export class AuthService {
         this.isAuth.next(false);
         this.router.navigate(['/login']);
       }
+      this.isFireAuthInitialize.next(true);
     });
   }
 
   isAuthenticated() {
     return this.isAuth.asObservable();
+  }
+
+  isAuthenticationDetermined() {
+    return this.isFireAuthInitialize.asObservable();
   }
 
   registerUser(data: { email: string; password: string }) {

@@ -1,13 +1,18 @@
-<mat-sidenav-container>
-  <mat-sidenav #sidenav mode="over">
-    <app-side-nav (sidenavClose)="sidenav.close()"></app-side-nav>
-  </mat-sidenav>
-  <mat-sidenav-content fxLayout="column" fxLayoutAlign="start stretch" >
-    <app-tool-bar (sidenavToggle)="sidenav.toggle()"></app-tool-bar>
-    <main class="main-content"
-          fxFlexFill.gt-xs fxLayout="column"
-          fxLayoutAlign="start">
-      <router-outlet></router-outlet>
-    </main>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<ng-container *ngIf="!(authService.isAuthenticationDetermined() | async); else mainApp">
+  <app-overlay-spinner></app-overlay-spinner>
+</ng-container>
+<ng-template #mainApp>
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="over">
+      <app-side-nav (sidenavClose)="sidenav.close()"></app-side-nav>
+    </mat-sidenav>
+    <mat-sidenav-content fxLayout="column" fxLayoutAlign="start stretch" >
+      <app-tool-bar (sidenavToggle)="sidenav.toggle()"></app-tool-bar>
+      <main class="main-content"
+            fxFlexFill.gt-xs fxLayout="column"
+            fxLayoutAlign="start">
+        <router-outlet></router-outlet>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-template>
