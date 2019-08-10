@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
@@ -7,6 +7,9 @@ import { UiModule } from '../ui/ui.module';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { SharedModule } from '../shared/shared.module';
 import { AuthRoutingModule } from './auth-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { AuthStateFeatureName, InitialAuthState } from './store/state';
+import { authReducer } from './store/reducer';
 
 @NgModule({
   declarations: [
@@ -26,4 +29,10 @@ import { AuthRoutingModule } from './auth-routing.module';
     LoginComponent,
   ]
 })
-export class AuthModule { }
+export class AuthModule {
+  static forFeature(): ModuleWithProviders {
+    return StoreModule.forFeature(AuthStateFeatureName, authReducer, {
+      initialState: InitialAuthState
+    });
+  }
+}

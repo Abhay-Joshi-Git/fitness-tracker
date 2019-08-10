@@ -17,7 +17,7 @@
     fxLayoutGap="10px"
     fxLayoutAlign="flex-end"
   >
-    <ng-container *ngIf="isAuth; else notAuthenticated">
+    <ng-container *ngIf="isAuth$ | async; else notAuthenticated">
       <li>
         <a routerLink="/training" routerLinkActive="router-link-active">Training</a>
       </li>

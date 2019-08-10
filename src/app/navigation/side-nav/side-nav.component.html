@@ -1,5 +1,5 @@
 <mat-nav-list (click)="closeSidenav()">
-  <ng-container *ngIf="isAuth; else noAuth">
+  <ng-container *ngIf="isAuth$ | async; else noAuth">
     <a
       mat-list-item
       routerLink="/training"

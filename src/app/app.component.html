@@ -1,4 +1,4 @@
-<ng-container *ngIf="!(authService.isAuthenticationDetermined() | async); else mainApp">
+<ng-container *ngIf="!(isAuthDetermined$ | async); else mainApp">
   <app-overlay-spinner></app-overlay-spinner>
 </ng-container>
 <ng-template #mainApp>

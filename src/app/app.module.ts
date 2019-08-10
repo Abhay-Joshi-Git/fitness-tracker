@@ -13,6 +13,9 @@ import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducers, InitialAppState } from './store/state';
 
 @NgModule({
   declarations: [
@@ -25,11 +28,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
+    StoreModule.forRoot(reducers, {
+      initialState: InitialAppState
+    }),
+    StoreDevtoolsModule.instrument(),
     AuthModule,
+    AuthModule.forFeature(),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    UiModule
+    UiModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

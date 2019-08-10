@@ -1,6 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/state';
+import { isAuthenticatedSelector } from 'src/app/auth/store/selectors';
 
 @Component({
   selector: 'app-tool-bar',
@@ -8,16 +11,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./tool-bar.component.scss']
 })
 export class ToolBarComponent implements OnInit {
-  private authSubscription: Subscription;
-  private isAuth = false;
+  isAuth$: Observable<boolean>;
   @Output() sidenavToggle = new EventEmitter<void>();
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.authSubscription = this.authService.isAuthenticated().subscribe(v => {
-      this.isAuth = v;
-    });
+    this.isAuth$ = this.store.select(isAuthenticatedSelector);
   }
 
   toggleSidenav() {
