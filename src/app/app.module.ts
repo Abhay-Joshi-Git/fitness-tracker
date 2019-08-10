@@ -10,8 +10,9 @@ import { SideNavComponent } from './navigation/side-nav/side-nav.component';
 import { environment } from 'src/environments/environment';
 import { UiModule } from './ui/ui.module';
 import { AuthModule } from './auth/auth.module';
-import { TrainingModule } from './training/training.module';
 import { SharedModule } from './shared/shared.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,10 +22,11 @@ import { SharedModule } from './shared/shared.module';
     SideNavComponent,
   ],
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
     SharedModule,
     AuthModule,
     AppRoutingModule,
-    TrainingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     UiModule

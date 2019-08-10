@@ -1,20 +1,17 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from 'src/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
+    CommonModule,
     MaterialModule,
     FlexLayoutModule,
   ],
   exports: [
-    BrowserModule,
-    BrowserAnimationsModule,
+    CommonModule,
     MaterialModule,
     FlexLayoutModule,
   ]

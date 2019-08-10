@@ -7,6 +7,7 @@ import { CurrentTrainingComponent } from './current-training/current-training.co
 import { PastTrainingComponent } from './past-training/past-training.component';
 import { ConfirmationDialogComponent } from './current-training/confirmation-dialog.component';
 import { SharedModule } from '../shared/shared.module';
+import { TrainingRoutingModule } from './training-routing.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     UiModule,
+    TrainingRoutingModule,
   ],
   entryComponents: [
     ConfirmationDialogComponent
