@@ -9,7 +9,3 @@ export const InitialAuthState: AuthState = {
     isAuthenticated: false,
     isAuthenticationDetermined: false,
 }
-
-export interface AppState {
-    [AuthStateFeatureName]: AuthState
-}

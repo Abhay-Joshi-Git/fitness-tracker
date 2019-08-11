@@ -23,16 +23,11 @@ import { authReducer } from './store/reducer';
     UiModule,
     AngularFireAuthModule,
     AuthRoutingModule,
+    StoreModule.forFeature(AuthStateFeatureName, authReducer)
   ],
   exports: [
     SignupComponent,
     LoginComponent,
   ]
 })
-export class AuthModule {
-  static forFeature(): ModuleWithProviders {
-    return StoreModule.forFeature(AuthStateFeatureName, authReducer, {
-      initialState: InitialAuthState
-    });
-  }
-}
+export class AuthModule {}

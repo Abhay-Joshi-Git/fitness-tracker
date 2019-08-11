@@ -14,7 +14,6 @@ export const authReducer = (state: AuthState = InitialAuthState, action: AuthAct
                 isAuthenticationDetermined: action.value
             }
         default:
-            console.log('returning auth state from reducer', state);
-            state;
+            return state;
     }
 };
