@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth'
 import { User } from './user.model';
-import { Subject, BehaviorSubject, Subscription, from, combineLatest } from 'rxjs';
+import { Subscription, from } from 'rxjs';
 import { Router } from '@angular/router';
-import { take, skipUntil, filter, map, sampleTime, skipWhile, tap } from 'rxjs/operators';
-import { FirebaseNameOrConfigToken } from '@angular/fire';
 import { Store } from '@ngrx/store';
 import { AuthState } from './store/state';
 import { Authenticate, AuthenticationDetermined } from './store/actions';
@@ -26,7 +24,6 @@ export class AuthService {
 
   initAuthStateChangeListener() {
     this.authStateSubscription = this.fireAuth.authState.subscribe(user => {
-      console.log(' authStateSubscription ', user);
       if (user) {
         this.store.dispatch(new Authenticate(true));
         this.router.navigate(['/training']);

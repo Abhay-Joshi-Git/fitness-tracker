@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, Inject, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -31,11 +31,10 @@ export class ConfirmationDialogComponent implements AfterViewInit {
     @ViewChild('noButton', { read: ElementRef, static: false }) noButton!: ElementRef;
 
     ngAfterViewInit(): void {
-        console.log('in dialog init.....', this.noButton);
         this.noButton.nativeElement.focus();
     }
 
-    constructor(@Inject(MAT_DIALOG_DATA) private data: any) {}
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
 
 

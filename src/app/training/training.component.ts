@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TrainingService } from './training.service';
 import { Exercise } from './exercise.model';
 import { Subscription } from 'rxjs';
@@ -20,7 +20,6 @@ export class TrainingComponent implements OnInit, OnDestroy {
   }
 
   onCurrentExerciseChange(exercise: Exercise) {
-    console.log('onStartNewExercise --', exercise);
     this.currentExerciseInProgress = exercise;
   }
 

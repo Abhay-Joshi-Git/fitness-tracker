@@ -1,7 +1,7 @@
 import { InitialAuthState, AuthState } from './state';
 import { AuthAction, AuthActionType } from './actions';
 
-export const authReducer = (state: AuthState = InitialAuthState, action: AuthAction) => {
+export function authReducer(state: AuthState = InitialAuthState, action: AuthAction) {
     switch (action.type) {
         case AuthActionType.SET_AUTHENTICATED:
             return {

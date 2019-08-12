@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TrainingService } from '../training.service';
 import { Exercise } from '../exercise.model';
@@ -24,7 +24,6 @@ export class NewTrainingComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(' submitting ', this.newExerciseForm);
     this.trainingService.setCurrentExercise(this.newExerciseForm.value.exercise);
   }
 

@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 import { Exercise } from '../exercise.model';
 import { TrainingService } from '../training.service';
-import { take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-current-training',
@@ -26,7 +25,6 @@ export class CurrentTrainingComponent implements OnInit {
   startProgress() {
     let step: number = this.currentExercise.duration / 100 * 1000;
     this.intervalId = window.setInterval(() => {
-      console.log('progressing.....', this.progress);
       this.progress +=  10;
       if (this.progress > 100) {
         this.progress = 100;
@@ -47,7 +45,6 @@ export class CurrentTrainingComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if (result) {
         this._trainingService.cancelExercise(this.progress);
       } else {

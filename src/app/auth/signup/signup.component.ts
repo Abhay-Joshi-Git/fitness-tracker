@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { FormGroup, NgForm } from '@angular/forms';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -23,7 +23,6 @@ export class SignupComponent implements AfterViewInit {
   }
 
   onSubmit(f: NgForm) {
-    console.log('submitting form..', f.value);
     if (f.valid) {
       this.authService.registerUser({
         email: f.value.useremail,
