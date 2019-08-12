@@ -18,7 +18,9 @@ export class AuthService {
     private readonly router: Router,
     private readonly fireAuth: AngularFireAuth,
     private readonly store: Store<AuthState>
-  ) {
+  ) {}
+
+  init() {
     this.initAuthStateChangeListener();
   }
 

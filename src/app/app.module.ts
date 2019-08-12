@@ -15,6 +15,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AppReducers } from './store/reducer';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(AppReducers),
     StoreDevtoolsModule.instrument(),
     AuthModule,
     AppRoutingModule,

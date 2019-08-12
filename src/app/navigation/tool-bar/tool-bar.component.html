@@ -16,6 +16,7 @@
     fxLayout="row"
     fxLayoutGap="10px"
     fxLayoutAlign="flex-end"
+    class="mx-2"
   >
     <ng-container *ngIf="isAuth$ | async; else notAuthenticated">
       <li>
@@ -34,4 +35,10 @@
       </li>
     </ng-template>
   </ul>
+  <mat-divider [vertical]=true [inset]="true" class="divider"></mat-divider>
+  <span fxLayout="row" fxLayoutAlign="flex-end center" class="mx-4">
+    <span class="mx-2">Light</span>
+    <mat-slide-toggle [checked]="(theme$ | async) === darkThemeType" (change)="themeToggle($event)"></mat-slide-toggle>
+    <span class="mx-2">Dark</span>
+  </span>
 </mat-toolbar>

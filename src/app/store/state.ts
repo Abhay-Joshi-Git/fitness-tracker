@@ -1,5 +1,18 @@
-import { AuthStateFeatureName, AuthState } from '../auth/store/state';
+export enum ThemeType {
+    light = 'LIGHT',
+    dark = 'DARK'
+}
 
 export interface AppState {
-    [AuthStateFeatureName]: AuthState
+    theme: ThemeType
+};
+
+export const InitialAppState = {
+    theme: ThemeType.light
+}
+
+export const AppStateFeatureName = 'app';
+
+export interface State {
+    [AppStateFeatureName]: AppState
 }

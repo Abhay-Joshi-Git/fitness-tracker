@@ -1,8 +1,8 @@
 <ng-container *ngIf="!(isAuthDetermined$ | async); else mainApp">
   <app-overlay-spinner></app-overlay-spinner>
 </ng-container>
-<ng-template #mainApp>
-  <mat-sidenav-container>
+<ng-template #mainApp >
+  <mat-sidenav-container [class.unicorn-dark-theme]="isDarkTheme$ | async">
     <mat-sidenav #sidenav mode="over">
       <app-side-nav (sidenavClose)="sidenav.close()"></app-side-nav>
     </mat-sidenav>
